@@ -16,6 +16,7 @@
   Authors (one per line):
 
     Brian Kennish <brian@rocketshipapps.com>
+    Kevin Brown <kevin.brown@make.com.au>
 */
 function onReady(callback) {
   if (document.readyState == 'complete') callback();
@@ -26,6 +27,49 @@ function populate(style, selector) {
   const SHEET = style.sheet;
   if (SHEET) SHEET.insertRule(selector + ' { display: none !important }', 0);
   else setTimeout(function() { populate(style, selector); }, 0);
+}
+
+var supportedSwapSizes = [
+  '300x250',
+  '728x90'
+];
+
+function shouldSwapAd(element) {
+  // var now = new Date();
+  //
+  // // Make sure it's the right time
+  // if (now.getDay() == 5 && // Friday
+  //     now.getHours() >= 17 && // 5PM
+  //     now.getHours() <= 23)   // Up to 11:59PM (Could be removed, leaving for possiiblity of decrease in range)
+  // {
+    if (typeof(element) === 'undefined') {
+      return true;
+    }
+
+    // Make sure we can handle the swap
+    if (element.tagName == 'IFRAME' ||
+        element.tagName == 'IMG') {
+
+      var size = element.clientWidth + 'x' + element.clientHeight;
+
+      if (supportedSwapSizes.indexOf(size) >= 0) {
+        return true;
+      }
+    }
+  // }
+
+  return false;
+}
+
+function swapAd(element) {
+  var size = element.clientWidth + 'x' + element.clientHeight;
+
+  if (element.tagName == 'IFRAME') {
+    element.src = chrome.extension.getURL('assets/' + size + '/index.html');
+
+  } else if (element.tagName == 'IMG') {
+    element.src = chrome.extension.getURL('assets/' + size + '/bug.gif');
+  }
 }
 
 const EXTENSION = chrome.extension;
@@ -40,9 +84,16 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
 
     if (SELECTOR) {
       if (!WHITELISTED) {
-        const STYLE = document.createElement('style');
-        (document.head || document.documentElement).insertBefore(STYLE, null);
-        populate(STYLE, SELECTOR);
+        if (shouldSwapAd()) {
+
+          // Swap content to our own ad
+          debugger;
+
+        } else {
+          const STYLE = document.createElement('style');
+          (document.head || document.documentElement).insertBefore(STYLE, null);
+          populate(STYLE, SELECTOR);
+        }
       }
 
       onReady(function() {
@@ -61,10 +112,13 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
             for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
                 if (DOMAINS[j].test(childHost)) {
                   if (!WHITELISTED) {
-                    var className = iframe.className;
-                    iframe.className =
-                        (className ? className + ' ' : '') +
-                            'adblockfast-collapsed';
+                    if (shouldSwapAd(iframe)) {
+                      swapAd(iframe);
+                    }
+                    else {
+                      var className = iframe.className;
+                      iframe.className = (className ? className + ' ' : '') + 'adblockfast-collapsed';
+                    }
                   }
 
                   break;
@@ -81,10 +135,13 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
             for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
                 if (DOMAINS[j].test(childHost)) {
                   if (!WHITELISTED) {
-                    var className = image.className;
-                    image.className =
-                        (className ? className + ' ' : '') +
-                            'adblockfast-collapsed';
+                    if (shouldSwapAd(image)) {
+                      swapAd(image);
+                    }
+                    else {
+                      var className = image.className;
+                      image.className = (className ? className + ' ' : '') + 'adblockfast-collapsed';
+                    }
                   }
 
                   break;
