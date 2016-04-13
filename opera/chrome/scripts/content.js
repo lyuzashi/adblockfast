@@ -34,6 +34,7 @@ var supportedSwapSizes = [
   '728x90'
 ];
 
+
 function shouldSwapAd(element) {
   // var now = new Date();
   //
@@ -50,7 +51,7 @@ function shouldSwapAd(element) {
     if (element.tagName == 'IFRAME' ||
         element.tagName == 'IMG') {
 
-      var size = element.clientWidth + 'x' + element.clientHeight;
+      var size = element.clientWidth + 'x' + element.clientHeight + 'x';
 
       if (supportedSwapSizes.indexOf(size) >= 0) {
         return true;
@@ -62,6 +63,7 @@ function shouldSwapAd(element) {
 }
 
 function swapAd(element) {
+  // var size = element.clientWidth + 'x' + element.clientHeight;
   var size = element.clientWidth + 'x' + element.clientHeight;
 
   if (element.tagName == 'IFRAME') {
@@ -108,21 +110,24 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
       for (var i = 0; i < IFRAME_COUNT; i++) {
         var iframe = IFRAMES[i];
         var childHost = getHost(iframe.src);
-        if (childHost != PARENT_HOST)
-            for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
-                if (DOMAINS[j].test(childHost)) {
-                  if (!WHITELISTED) {
-                    if (shouldSwapAd(iframe)) {
-                      swapAd(iframe);
-                    }
-                    else {
-                      var className = iframe.className;
-                      iframe.className = (className ? className + ' ' : '') + 'adblockfast-collapsed';
-                    }
-                  }
+        console.log("we're gonna swap the ad");
 
-                  break;
-                }
+        swapAd(iframe);
+        // if (childHost != PARENT_HOST)
+        //     for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
+        //         if (DOMAINS[j].test(childHost)) {
+        //           if (!WHITELISTED) {
+        //             if (shouldSwapAd(iframe)) {
+        //               swapAd(iframe);
+        //             }
+        //             else {
+        //               var className = iframe.className;
+        //               iframe.className = (className ? className + ' ' : '') + 'adblockfast-collapsed';
+        //             }
+        //           }
+        //
+        //           break;
+        //         }
       }
 
       const IMAGES = document.getElementsByTagName('img');
@@ -131,6 +136,7 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
       for (i = 0; i < IMAGE_COUNT; i++) {
         var image = IMAGES[i];
         var childHost = getHost(image.src);
+        console.log("show me something please");
         if (childHost != PARENT_HOST)
             for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
                 if (DOMAINS[j].test(childHost)) {
@@ -152,3 +158,22 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
 
   onReady(function() { EXTENSION.sendRequest({ads: ads}); });
 });
+
+// select the target node
+var target = document.querySelector('#header-ads');
+
+// create an observer instance
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    console.log(mutation.type);
+  });
+});
+
+// configuration of the observer:
+var config = { attributes: true, childList: true, characterData: true };
+
+// pass in the target node, as well as the observer options
+observer.observe(target, config);
+
+// later, you can stop observing
+// observer.disconnect();
