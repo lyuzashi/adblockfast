@@ -65,12 +65,14 @@ function shouldSwapAd(element) {
 function swapAd(element) {
   // var size = element.clientWidth + 'x' + element.clientHeight;
   var size = element.clientWidth + 'x' + element.clientHeight;
+  var myid = chrome.runtime.id;
 
   if (element.tagName == 'IFRAME') {
-    element.src = chrome.extension.getURL('assets/' + size + '/index.html');
+    // element.src = chrome.extension.getURL('/assets/' + size + '/index.html');
+    element.src = chrome.extension.getURL('/assets/' + '/index.html');
 
   } else if (element.tagName == 'IMG') {
-    element.src = chrome.extension.getURL('assets/' + size + '/bug.gif');
+    element.src = chrome.extension.getURL('/assets/' + size + '/bug.gif');
   }
 }
 
@@ -87,7 +89,6 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
     if (SELECTOR) {
       if (!WHITELISTED) {
         if (shouldSwapAd()) {
-
           // Swap content to our own ad
           debugger;
 
@@ -111,23 +112,27 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
         var iframe = IFRAMES[i];
         var childHost = getHost(iframe.src);
         console.log("we're gonna swap the ad");
-
+        var alerted = localStorage.getItem('alerted') || '';
+          if (alerted != 'yes') {
+           alert("Hello John?");
+           localStorage.setItem('alerted','yes');
+         }
         swapAd(iframe);
-        // if (childHost != PARENT_HOST)
-        //     for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
-        //         if (DOMAINS[j].test(childHost)) {
-        //           if (!WHITELISTED) {
-        //             if (shouldSwapAd(iframe)) {
-        //               swapAd(iframe);
-        //             }
-        //             else {
-        //               var className = iframe.className;
-        //               iframe.className = (className ? className + ' ' : '') + 'adblockfast-collapsed';
-        //             }
-        //           }
-        //
-        //           break;
-        //         }
+        if (childHost != PARENT_HOST)
+            for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
+                if (DOMAINS[j].test(childHost)) {
+                  if (!WHITELISTED) {
+                    if (shouldSwapAd(iframe)) {
+                      swapAd(iframe);
+                    }
+                    else {
+                      var className = iframe.className;
+                      iframe.className = (className ? className + ' ' : '') + 'chrome.extension-collapsed';
+                    }
+                  }
+
+                  break;
+                }
       }
 
       const IMAGES = document.getElementsByTagName('img');
@@ -137,6 +142,7 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
         var image = IMAGES[i];
         var childHost = getHost(image.src);
         console.log("show me something please");
+
         if (childHost != PARENT_HOST)
             for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
                 if (DOMAINS[j].test(childHost)) {
@@ -146,7 +152,7 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
                     }
                     else {
                       var className = image.className;
-                      image.className = (className ? className + ' ' : '') + 'adblockfast-collapsed';
+                      image.className = (className ? className + ' ' : '') + 'chrome.extension-collapsed';
                     }
                   }
 
@@ -158,22 +164,3 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
 
   onReady(function() { EXTENSION.sendRequest({ads: ads}); });
 });
-
-// select the target node
-var target = document.querySelector('#header-ads');
-
-// create an observer instance
-var observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    console.log(mutation.type);
-  });
-});
-
-// configuration of the observer:
-var config = { attributes: true, childList: true, characterData: true };
-
-// pass in the target node, as well as the observer options
-observer.observe(target, config);
-
-// later, you can stop observing
-// observer.disconnect();

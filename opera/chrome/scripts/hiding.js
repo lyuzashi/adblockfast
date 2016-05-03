@@ -524,71 +524,71 @@ const SELECTORS = {
       '.ad-top, #csaBottom',
   'www.google.co.id':
       'mbEnd[cellspacing="0"][cellpadding="0"], #rhs_block > #mbEnd, #tads + div + .c, #tads.c, #topstuff > #tads, #ad, #tadsc, .GC3LC41DERB + div[style="position: relative; height: 170px;"], .GGQPGYLCD5, .GGQPGYLCMCB, .GISRH3UDHB, .ad-active, .ads, .c[style="margin: 0pt;"], .nH.MC, .ts[style="margin:0 0 12px;height:92px;width:100%"], [style="border: 1px solid rgb(0, 90, 136);"], [style="border: 1px solid rgb(145, 117, 77);"], [style="border: 1px solid rgb(241, 250, 248);"], [style="border: 1px solid rgb(51, 102, 153);"], [style="border: 1px solid rgb(51, 102, 204);"], body > div[align]:first-child + style + table[cellpadding="0"][width="100%"] > tbody:only-child > tr:only-child > td:only-child, div[style^="height: 16px; font: bold 12px/16px"]',
-	'xinhuanet.com': 
+	'xinhuanet.com':
 		'.adv, [style="z-index:5;"], #topAdv, [id^=adBody], #promotionItem, [id^=Full], .scrollAd, [class^=ad]',
-	'www.bbc.co.uk': 
+	'www.bbc.co.uk':
 		'#bbccom_leaderboard_container, ##bbccom_mpu, .bbccom_advert, #bbccom_sponsor_section, #bbccom_storyprintsponsorship',
-	'www.bbc.com': 
+	'www.bbc.com':
 		'#bbccom_leaderboard_container, ##bbccom_mpu, .bbccom_advert, #bbccom_sponsor_section, #bbccom_storyprintsponsorship',
-	'people.com.cn': 
-		'.top_ad, .mt15, .ad_banner, .city dl', 
-	'www.people.com.cn': 
+	'people.com.cn':
 		'.top_ad, .mt15, .ad_banner, .city dl',
-	'spanish.peopledaily.com.cn': 
+	'www.people.com.cn':
+		'.top_ad, .mt15, .ad_banner, .city dl',
+	'spanish.peopledaily.com.cn':
 		'.ad01, .ad02',
-	'www.cntv.cn': 
+	'www.cntv.cn':
 		'.adv, [id^=div-gpt-ad-]',
-	'www.pixnet.net': 
+	'www.pixnet.net':
 		'.ad',
-	'www.dailymotion.com': 
+	'www.dailymotion.com':
 		'.affiliation_cont, .dmpi_masscast, .masscast_box, .masscast_middle_box, #mc_Middle, #top_banner',
-	'www.google.pl': 
+	'www.google.pl':
 		'#tads, .ads-ad, ._Ak, .cards-categorical-list-ad',
-	'www.ebay.de': 
+	'www.ebay.de':
 		'.ft-btyle, [id^=rtm_html_], #gf-mrecs-ads',
-	'www.google.co.kr': 
+	'www.google.co.kr':
 		'#tads, .ads-ad, ._Ak, .cards-categorical-list-ad',
-	'www.dailymail.co.uk': 
+	'www.dailymail.co.uk':
 		'.editors-choice.ccox.link-ccox.linkro-darkred, .googleAds, #wideCommentAdvert, .adHolder, [id^=taboola-stream-thumbnails-]',
-	'www.usatoday.com': 
+	'www.usatoday.com':
 		'.partner, #usat_PosterBlog, #divMarketplace, #footerSponsorOne, #footerSponsorTwo, #header-leaderboard, #marketplace2, #prerollOverlayPlayer, #side-banner1, #side-banner2, .bottom-google-links, [id^=taboola-], .taboola-related-module',
-	'www.accuweather.com': 
+	'www.accuweather.com':
 		'[id^=aad]',
-	'time.com': 
+	'time.com':
 		'.sep, [id^=ad-unit-], [class$=-ad]',
-	'www.reuters.com': 
+	'www.reuters.com':
 		'#bannerStrip, #marchex, .slide-ad',
-	'www.nbcnews.com': 
+	'www.nbcnews.com':
 		'#Sidebar2-sponsored, .deals, .eshopStory, .textSmallGrey, .ad-container',
-	'www.nbcsports.com': 
+	'www.nbcsports.com':
 		'#top_90h, [id^=block-dart-dart-tag-dart-tag]',
-	'economictimes.indiatimes.com': 
+	'economictimes.indiatimes.com':
 		'.colombiaAd, .flt #sideBar.adsbg300:first-of-type, #sideBar.flt .adsbg300:nth-child(4), .adContainer, .flr .adsbg300, [title=Advertisement]',
-	'www.wunderground.com': 
+	'www.wunderground.com':
 		'.spotBox, .header-ad-wrap, #top-ad-wrapper, .ad-box, .report-ad',
-	'thinkprogress.org': 
+	'thinkprogress.org':
 		'[id^=ad_zone], .yad-sponsored, .sidebar-ad',
-	'laughingsquid.com': 
+	'laughingsquid.com':
 		'.sharethrough-placement, .adsbygoogle, [id^=div-gpt-ad], [id^=taboola]',
-	'bits.blogs.nytimes.com': 
+	'bits.blogs.nytimes.com':
 		'.ad, .text-ad, #SponLink',
-	'venturebeat.com': 
+	'venturebeat.com':
 		'.widget_vb_dfp_ad, .vb-ad-leaderboard, .advertorial',
-	'www.chinadaily.com.cn': 
+	'www.chinadaily.com.cn':
 		'.w980.pt10, [class^=ad], iframe[name^=ad], img[src*=adpic]',
-	'news.livedoor.com': 
+	'news.livedoor.com':
 		'iframe[src*=unthem], .ads-block-link, .rakutenAff, aside.subSec:first-of-type',
-	'www.livedoor.com': 
+	'www.livedoor.com':
 		'iframe[src*=unthem], .ads-block-link',
-	'www.gmw.cn': 
+	'www.gmw.cn':
 		'[class^=bannerArea], [class^=ad], [class^=contentadBox]',
-	'gmw.cn': 
+	'gmw.cn':
 		'[class^=bannerArea], [class^=ad], [class^=contentadBox]',
-	'guancha.gmw.cn': 
+	'guancha.gmw.cn':
 		'[class^=bannerArea], [class^=ad], [class^=contentadBox]',
-	'politics.gmw.cn': 
+	'politics.gmw.cn':
 		'[class^=bannerArea], [class^=ad], [class^=contentadBox]',
-	'news.gmw.cn': 
+	'news.gmw.cn':
 		'[class^=bannerArea], [class^=ad], [class^=contentadBox]',
 	'sports.gmw.cn':
 		'[class^=bannerArea], [class^=ad], [class^=contentadBox]',
