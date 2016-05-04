@@ -67,10 +67,10 @@ function swapAd(element) {
   var size = element.clientWidth + 'x' + element.clientHeight;
   var myid = chrome.runtime.id;
 
-  if (element.tagName == 'IFRAME') {
-    // element.src = chrome.extension.getURL('/assets/' + size + '/index.html');
-    element.src = chrome.extension.getURL('/assets/' + '/index.html');
-
+  if (element.tagName == 'IFRAME' && element.width == '300') {
+      element.src = chrome.extension.getURL('/assets/' + '/index.html');
+  } else if (element.tagName == 'IFRAME' && element.width != '300') {
+    element.src = chrome.extension.getURL('/assets/' + '/none.html');
   } else if (element.tagName == 'IMG') {
     element.src = chrome.extension.getURL('/assets/' + size + '/bug.gif');
   }
