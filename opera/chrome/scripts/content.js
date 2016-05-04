@@ -68,7 +68,7 @@ function swapAd(element) {
   var myid = chrome.runtime.id;
 
   if (element.tagName == 'IFRAME' && element.width == '300') {
-      element.src = chrome.extension.getURL('/assets/' + '/index.html');
+      element.src = chrome.extension.getURL('/assets/' + '/300x250/' + '/index.html');
   } else if (element.tagName == 'IFRAME' && element.width != '300') {
     element.src = chrome.extension.getURL('/assets/' + '/none.html');
   } else if (element.tagName == 'IMG') {
