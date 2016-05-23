@@ -24,18 +24,31 @@ function onReady(callback) {
 }
 
 function populate(style, selector) {
-  const SHEET = style.sheet;
-  if (SHEET) SHEET.insertRule(selector + ' { display: none !important }', 0);
-  else setTimeout(function() { populate(style, selector); }, 0);
+  // const SHEET = style.sheet;
+  // if (SHEET) SHEET.insertRule(selector + ' { display: none !important }', 0);
+  // else setTimeout(function() { populate(style, selector); }, 0);
 }
 
 var supportedSwapSizes = [
   '300x250',
-  '728x90'
+  '728x90',
+  '300x600'
 ];
+
+var iframe = document.getElementsByTagName('iframe');
+var observer = new MutationObserver(function(mutations) {
+ mutations.forEach(function(mutation) {
+   for (var i = 0; i < mutation.addedNodes.length; i++)
+     iframe.push(mutation.addedNodes[i]);
+ })
+});
+observer.observe(document, { childList: true });
+console.log("hello new iframe");
+
 
 
 function shouldSwapAd(element) {
+
   // var now = new Date();
   //
   // // Make sure it's the right time
@@ -63,17 +76,29 @@ function shouldSwapAd(element) {
 }
 
 function swapAd(element) {
-  // var size = element.clientWidth + 'x' + element.clientHeight;
-  var size = element.clientWidth + 'x' + element.clientHeight;
-  var myid = chrome.runtime.id;
+  // select the target node
 
-  if (element.tagName == 'IFRAME' && element.width == '300') {
-      element.src = chrome.extension.getURL('/assets/' + '/300x250/' + '/index.html');
-  } else if (element.tagName == 'IFRAME' && element.width != '300') {
+  // var size = element.clientWidth + 'x' + element.clientHeight;
+  // var size = element.clientWidth + 'x' + element.clientHeight;
+  // var myid = chrome.runtime.id;
+
+  // if (element.tagName == 'IFRAME' && element.width == '300' && element.height == '250') {
+  //     element.src = chrome.extension.getURL('/assets/' + '/300x250/' + '/index.html');
+  // } else if (element.tagName == 'IFRAME' && element.width == '300' && element.height == '600') {
+  //   element.src = chrome.extension.getURL('/assets/' + '/300x600/' + '/index.html');
+  // } else if (element.tagName == 'IFRAME' && element.width == '728' && element.height == '90') {
+  //   element.src = chrome.extension.getURL('/assets/' + '/728x90/' + '/index.html');
+  // } else if (element.tagName == 'IFRAME' && element.width != '300' && element.width != '728') {
+  //   element.src = chrome.extension.getURL('/assets/' + '/none.html');
+  // } else if (element.tagName == 'IMG') {
+  //   element.src = chrome.extension.getURL('/assets/' + '/none.html');
+  // }
+  if (element.tagName == 'IFRAME') {
     element.src = chrome.extension.getURL('/assets/' + '/none.html');
   } else if (element.tagName == 'IMG') {
-    element.src = chrome.extension.getURL('/assets/' + size + '/bug.gif');
+    element.src = chrome.extension.getURL('/assets/' + '/none.html');
   }
+
 }
 
 const EXTENSION = chrome.extension;
@@ -90,7 +115,7 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
       if (!WHITELISTED) {
         if (shouldSwapAd()) {
           // Swap content to our own ad
-          debugger;
+          // debugger;
 
         } else {
           const STYLE = document.createElement('style');
@@ -112,11 +137,6 @@ EXTENSION.sendRequest({initialized: true}, function(response) {
         var iframe = IFRAMES[i];
         var childHost = getHost(iframe.src);
         console.log("we're gonna swap the ad");
-        var alerted = localStorage.getItem('alerted') || '';
-          if (alerted != 'yes') {
-           alert("Hello John?");
-           localStorage.setItem('alerted','yes');
-         }
         swapAd(iframe);
         if (childHost != PARENT_HOST)
             for (var j = DOMAINS_LENGTH - 1; j + 1; j--)
