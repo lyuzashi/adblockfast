@@ -21,6 +21,19 @@
 function onReady(callback) {
   if (document.readyState == 'complete') callback();
   else addEventListener('load', callback);
+
+  var iframe = document.getElementsByTagName('iframe');
+  var observer = new MutationObserver(function(mutations) {
+   mutations.forEach(function(mutation) {
+     for (var i = 0; i < mutation.addedNodes.length; i++)
+       iframe.push(mutation.addedNodes[i]);
+       if (node.tagName == 'IFRAME') {
+         node.style.display = 'none';
+       }
+   })
+  });
+  observer.observe(document, { childList: true });
+  console.log(iframe, "hello");
 }
 
 function populate(style, selector) {
@@ -35,15 +48,6 @@ var supportedSwapSizes = [
   '300x600'
 ];
 
-var iframe = document.getElementsByTagName('iframe');
-var observer = new MutationObserver(function(mutations) {
- mutations.forEach(function(mutation) {
-   for (var i = 0; i < mutation.addedNodes.length; i++)
-     iframe.push(mutation.addedNodes[i]);
- })
-});
-observer.observe(document, { childList: true });
-console.log("hello new iframe");
 
 
 
